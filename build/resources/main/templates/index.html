@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD операции</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1>Тест CRUD операций</h1>
+
+    <div class="form-grid">
+        <!-- Форма для создания студента -->
+        <form action="/students" method="post">
+            <h2>Создать</h2>
+            <label for="createName">Имя:</label>
+            <input type="text" id="createName" name="name" placeholder="Введите имя" required>
+            <label for="createEmail">Email:</label>
+            <input type="email" id="createEmail" name="email" placeholder="Введите email" required>
+            <button type="submit">Создать</button>
+        </form>
+
+        <!-- Форма для чтения студента -->
+<form id="readForm" action="/students" method="get">
+    <h2>Читать</h2>
+    <label for="readId">ID:</label>
+    <input type="text" id="readId" name="id" placeholder="Введите ID для чтения" required>
+    <button type="submit">Читать</button>
+</form>
+
+        <!-- Форма для обновления студента -->
+<form id="updateForm" onsubmit="handleUpdate(event);">
+    <h2>Обновить</h2>
+    <label for="updateId">ID:</label>
+    <input type="text" id="updateId" name="id" placeholder="Введите ID для обновления" required>
+    <label for="updateName">Новые данные:</label>
+    <input type="text" id="updateName" name="name" placeholder="Введите новое имя" required>
+    <label for="updateEmail">Новый Email:</label>
+    <input type="email" id="updateEmail" name="email" placeholder="Введите новый email" required>
+    <button type="submit">Обновить</button>
+</form>
+
+<!-- Форма для удаления студента -->
+<form action="/students/{id}" method="post" onsubmit="this.action=this.action.replace('{id}', document.getElementById('deleteId').value);">
+    <input type="hidden" name="_method" value="DELETE">
+    <h2>Удалить</h2>
+    <label for="deleteId">ID:</label>
+    <input type="text" id="deleteId" name="id" placeholder="Введите ID для удаления" required>
+    <button type="submit">Удалить</button>
+</form>
+    </div>
+
+    <div id="result">
+    <h3>Результат</h3>
+    <p id="resultText">Пока никаких действий не выполнено.</p>
+</div>
+
+<script>
+document.getElementById('readForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Отменяем стандартное поведение формы
+    const id = document.getElementById('readId').value;
+
+    fetch(`/students?id=${id}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Студент не найден');
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('resultText').innerHTML = `
+                Имя: ${data.name}<br>
+                Email: ${data.email}
+            `;
+        })
+        .catch(error => {
+            document.getElementById('resultText').textContent = error.message;
+        });
+});
+</script>
+
+<script>
+function handleUpdate(event) {
+    event.preventDefault(); // Отменяем стандартное поведение формы
+
+    const id = document.getElementById('updateId').value; // Получаем ID
+    const name = document.getElementById('updateName').value; // Получаем имя
+    const email = document.getElementById('updateEmail').value; // Получаем email
+
+    fetch(`/students/${id}`, { // Используем ID в URL
+        method: 'PUT', // Используем метод PUT
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id, name: name, email: email }) // Отправляем данные в формате JSON
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Не удалось обновить студента');
+        return response.json(); // Ожидаем ответ в формате JSON
+    })
+    .then(data => {
+        // Обновляем секцию результата
+        document.getElementById('resultText').innerHTML = `Студент обновлен: ${data.name} (${data.email})`;
+    })
+    .catch(error => {
+        document.getElementById('resultText').textContent = error.message;
+    });
+}
+</script>
+
+</body>
+</html>
