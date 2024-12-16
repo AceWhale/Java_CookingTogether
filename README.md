@@ -1,2 +1,2 @@
 # hibernate
-hibernate Spring Boot CRUD operations example
+[Javadoc](./doc/index.html).
