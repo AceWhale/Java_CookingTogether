@@ -1,0 +1,81 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(0, 0, 0);
+    color: rgb(221, 221, 221);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(221, 221, 221);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+form {
+    background-color: #1F2833;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: rgb(221, 221, 221);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid rgb(221, 221, 221);;
+    border-radius: 6px;
+    background-color: #1F2833;
+    color: #C5C6C7;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: rgb(221, 221, 221);;
+}
+
+button {
+    background-color: rgb(221, 221, 221);;
+    color: #1F2833;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background-color: rgb(221, 221, 221);;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#result {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #1F2833;
+    border: 1px solid rgb(221, 221, 221);;
+    border-radius: 12px;
+    font-size: 1.1em;
+}
+
+#resultText {
+    font-weight: bold;
+    color: #C5C6C7;
+}
