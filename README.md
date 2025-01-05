@@ -1,2 +1,2 @@
 # hibernate
-[Javadoc](./doc/index.html).
+[Javadoc](https://acewhale.github.io/Java_CookingTogether/).
