@@ -1,0 +1,11 @@
+<div class="recipe-card">
+  <h2 class="recipe-title" th:text="${recipe.title}"></h2>
+  <p class="recipe-meta" th:text="${recipe.date}"></p>
+  <div class="recipe-content">
+    <img th:src="@{${recipe.image}}" alt="Recipe Image" class="recipe-image">
+    <p class="recipe-description" th:text="${recipe.description}"></p>
+  </div>
+  <div class="read-more">
+    <a href="#" class="read-more-link">Читать далее →</a>
+  </div>
+</div>

@@ -1,13 +1,23 @@
 package com.cookingtogether.hibernate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 /**
  * Класс, представляющий комментарий к рецепту.
  * Используется для хранения информации о комментариях, таких как текст комментария, 
  * идентификатор рецепта и пользователя.
  */
+@Entity
+@Table(name = "comments")
 public class Comment {
 
     /** Уникальный идентификатор комментария. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /** Идентификатор рецепта, к которому относится комментарий. */

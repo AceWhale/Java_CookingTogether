@@ -1,4 +1,4 @@
-package com.cookingtogether.hibernate;
+package com.cookingtogether.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cookingtogether.hibernate.User;
+import com.cookingtogether.repository.UserRepo;
 
 import java.util.List;
 

@@ -1,12 +1,22 @@
 package com.cookingtogether.hibernate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 /**
  * Класс, представляющий рейтинг рецепта.
  * Используется для хранения информации о рейтингах рецептов, таких как идентификаторы рецепта и пользователя, а также оценка.
  */
+@Entity
+@Table(name = "ratings")
 public class Rating {
 
     /** Уникальный идентификатор рейтинга. */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /** Идентификатор рецепта, которому был поставлен рейтинг. */

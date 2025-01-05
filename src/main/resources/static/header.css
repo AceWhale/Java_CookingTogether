@@ -1,5 +1,5 @@
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #f9f9f9;
   margin: 0;
   padding: 0;
@@ -43,7 +43,7 @@ body {
 }
 
 .header-link.active {
-  color: #666; 
+  color: #666;
 }
 
 .header-link:hover {
@@ -163,7 +163,7 @@ body {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .side-content h3 {
@@ -203,17 +203,197 @@ body {
 }
 
 .social-icon.youtube {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .social-icon.facebook {
-  color: #1877F2;
+  color: #1877f2;
 }
 
 .social-icon.instagram {
-  color: #E4405F;
+  color: #e4405f;
 }
 
 .social-icon.twitter {
-  color: #1DA1F2;
+  color: #1da1f2;
+}
+.card-container {
+  margin-top: 40px;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.card-title {
+  font-size: 1.8em;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-subtitle {
+  font-size: 1.1em;
+  color: #555555;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.social-icon {
+  font-size: 28px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  opacity: 0.7;
+}
+
+.social-icon.twitter {
+  color: #1da1f2;
+}
+.social-icon.facebook {
+  color: #1877f2;
+}
+.social-icon.instagram {
+  color: #e4405f;
+}
+.social-icon.youtube {
+  color: #ff0000;
+}
+
+.related-posts {
+  margin-top: 20px;
+}
+
+.related-posts h3 {
+  font-size: 1.4em;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.related-posts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.related-posts li {
+  margin-bottom: 5px;
+}
+
+.related-link {
+  color: #3016c2;
+  text-decoration: none;
+  font-size: 1.1em;
+}
+
+.related-link:hover {
+  text-decoration: underline;
+}
+
+.comment-form {
+  margin-top: 20px;
+}
+
+.comment-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+}
+
+.comment-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #3016c2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.comment-button:hover {
+  background-color: #5530d6;
+}
+.reaction-button {
+  background: linear-gradient(135deg, #f7f9fc, #e0e7ff);
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reaction-button:hover {
+  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+  color: #00796b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.like-button {
+  background: linear-gradient(135deg, #fff5f5, #ffe6e6);
+  color: #d32f2f;
+}
+
+.like-button:hover {
+  background: linear-gradient(135deg, #ffe6e6, #ffcdd2);
+  color: #b71c1c;
+}
+
+.like-button i {
+  color: inherit;
+}
+
+.repost-button {
+  background: linear-gradient(135deg, #f9f9f9, #ececec);
+  color: #6b6b6b;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.repost-button:hover {
+  background: linear-gradient(135deg, #eaeaea, #dcdcdc);
+  color: #4a6572;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.repost-button i {
+  color: #6b6b6b;
+  transition: color 0.3s ease;
+}
+
+.repost-button:hover i {
+  color: #4a6572;
 }

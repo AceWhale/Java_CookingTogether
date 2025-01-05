@@ -10,15 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
 
-    /**
-     * Обрабатывает запрос к главной странице.
-     *
-     * @return имя шаблона главной страницы ("index").
-     */
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 
     /**
      * Обрабатывает запрос к странице регистрации.

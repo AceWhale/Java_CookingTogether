@@ -1,10 +1,15 @@
-package com.cookingtogether.hibernate;
+package com.cookingtogether.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.cookingtogether.hibernate.User;
+import com.cookingtogether.repository.UserRepo;
+import com.cookingtogether.service.UserService;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.OptimisticLockException;
 

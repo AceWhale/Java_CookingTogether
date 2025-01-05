@@ -1,16 +1,25 @@
 package com.cookingtogether.hibernate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.sql.Date;
 
 /**
  * Класс, представляющий блог, содержащий информацию о рецептах и их описаниях.
  * Этот класс используется для хранения информации о блоге в базе данных.
  */
+@Entity
+@Table(name = "blogs")
 public class Blog {
 
     /**
      * Идентификатор блога.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
     /**
