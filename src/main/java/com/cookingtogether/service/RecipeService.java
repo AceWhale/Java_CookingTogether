@@ -1,11 +1,13 @@
 package com.cookingtogether.service;
 
-import com.cookingtogether.hibernate.Recipe;
-import com.cookingtogether.repository.RecipeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cookingtogether.Recipe;
+import com.cookingtogether.repository.RecipeRepo;
+
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Сервис для работы с рецептами.
@@ -52,9 +54,9 @@ public class RecipeService {
      * @param category Категория рецепта.
      * @return Список рецептов в заданной категории.
      */
-    public List<Recipe> getRecipesByCategory(String category) {
-        return recipeRepo.findByCategory(category);
-    }
+    //public List<Recipe> getRecipesByCategory(String category) {
+    //    return recipeRepo.findByCategory(category);
+    //}
 
     /**
      * Найти рецепты, созданные пользователем.
@@ -62,7 +64,7 @@ public class RecipeService {
      * @param userId Идентификатор пользователя.
      * @return Список рецептов, созданных указанным пользователем.
      */
-    public List<Recipe> getRecipesByUserId(int userId) {
+    public Optional<Recipe> getRecipesByUserId(int userId) {
         return recipeRepo.findByUserId(userId);
     }
 

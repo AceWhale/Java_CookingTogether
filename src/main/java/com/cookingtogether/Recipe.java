@@ -1,9 +1,11 @@
-package com.cookingtogether.hibernate;
+package com.cookingtogether;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Column;
@@ -23,6 +25,10 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     /** Идентификатор блога, к которому относится рецепт. */
     private int blogId;
@@ -41,6 +47,15 @@ public class Recipe {
 
     /** Рейтинг рецепта. */
     private float rating;
+    
+    public Recipe() {
+    	this.id = 0;
+        this.blogId = 0;
+        this.title = "empty";
+        this.ingredients = null;
+        this.steps = "empty";
+        this.rating = 0;
+    }
 
     /**
      * Конструктор для создания объекта рецепта.

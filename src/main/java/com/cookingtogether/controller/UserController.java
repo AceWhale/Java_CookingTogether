@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.cookingtogether.hibernate.User;
+import com.cookingtogether.User;
 import com.cookingtogether.repository.UserRepo;
 import com.cookingtogether.service.UserService;
 

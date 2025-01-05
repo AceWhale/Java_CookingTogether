@@ -1,10 +1,12 @@
 package com.cookingtogether.repository;
 
-import com.cookingtogether.hibernate.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.cookingtogether.Recipe;
+
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Репозиторий для работы с сущностью Recipe.
@@ -27,7 +29,7 @@ public interface RecipeRepo extends JpaRepository<Recipe, Integer> {
      * @param category Категория рецепта.
      * @return Список рецептов, соответствующих категории.
      */
-    List<Recipe> findByCategory(String category);
+    //List<Recipe> findByCategory(String category);
 
     /**
      * Найти рецепты, созданные пользователем.
@@ -35,5 +37,5 @@ public interface RecipeRepo extends JpaRepository<Recipe, Integer> {
      * @param userId Идентификатор пользователя.
      * @return Список рецептов, созданных указанным пользователем.
      */
-    List<Recipe> findByUserId(int userId);
+    Optional<Recipe> findByUserId(int userId);
 }

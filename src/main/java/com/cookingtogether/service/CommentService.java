@@ -1,9 +1,10 @@
 package com.cookingtogether.service;
 
-import com.cookingtogether.hibernate.Comment;
-import com.cookingtogether.repository.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cookingtogether.Comment;
+import com.cookingtogether.repository.CommentRepo;
 
 import java.util.List;
 

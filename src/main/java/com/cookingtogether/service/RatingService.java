@@ -1,9 +1,10 @@
 package com.cookingtogether.service;
 
-import com.cookingtogether.hibernate.Rating;
-import com.cookingtogether.repository.RatingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cookingtogether.Rating;
+import com.cookingtogether.repository.RatingRepo;
 
 import java.util.List;
 import java.util.Optional;

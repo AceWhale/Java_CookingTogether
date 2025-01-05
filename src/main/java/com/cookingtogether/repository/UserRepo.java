@@ -2,7 +2,7 @@ package com.cookingtogether.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.cookingtogether.hibernate.User;
+import com.cookingtogether.User;
 
 /**
  * Репозиторий для работы с сущностью {@link User}.

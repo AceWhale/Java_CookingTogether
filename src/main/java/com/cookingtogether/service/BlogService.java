@@ -1,10 +1,10 @@
 package com.cookingtogether.service;
 
-import com.cookingtogether.hibernate.Blog;
-import com.cookingtogether.repository.BlogRepo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.cookingtogether.Blog;
+import com.cookingtogether.repository.BlogRepo;
 
 import java.util.List;
 import java.util.Optional;

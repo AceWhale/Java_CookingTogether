@@ -1,12 +1,13 @@
 package com.cookingtogether.controller;
 
-import com.cookingtogether.hibernate.Rating;
-import com.cookingtogether.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.cookingtogether.Rating;
+import com.cookingtogether.service.RatingService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.OptimisticLockException;

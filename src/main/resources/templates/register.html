@@ -26,19 +26,24 @@
 	</div>
 
 	<script>
-        document.getElementById('createUserForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
+	document.getElementById('createUserForm').addEventListener('submit', function(event) {
+	    event.preventDefault();
+	    const formData = new FormData(this);
+	    
+	    // Печать данных формы
+	    for (let [key, value] of formData.entries()) {
+	        console.log(key + ": " + value);
+	    }
 
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(message => {
-                document.getElementById('resultText').textContent = message;
-            });
-        });
+	    fetch(this.action, {
+	        method: 'POST',
+	        body: formData
+	    })
+	    .then(response => response.text())
+	    .then(message => {
+	        document.getElementById('resultText').textContent = message;
+	    });
+	});
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.cookingtogether.hibernate;
+package com.cookingtogether;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Основной класс приложения для кулинарного блога.
  * Использует Spring Boot для запуска.
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.cookingtogether")
 public class HibernateApplication {
 
     /**

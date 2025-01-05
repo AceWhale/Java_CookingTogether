@@ -1,4 +1,4 @@
-package com.cookingtogether.repository;
+package com.cookingtogether;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

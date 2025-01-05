@@ -1,8 +1,9 @@
 package com.cookingtogether.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import com.cookingtogether.hibernate.Blog;
+import com.cookingtogether.Blog;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ import java.util.List;
  * @see Blog
  * @see JpaRepository
  */
+@Repository
 public interface BlogRepo extends JpaRepository<Blog, Integer> {
 
     /**

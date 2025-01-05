@@ -1,10 +1,11 @@
 package com.cookingtogether.controller;
 
-import com.cookingtogether.hibernate.Comment;
-import com.cookingtogether.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.cookingtogether.Comment;
+import com.cookingtogether.service.CommentService;
 
 import java.util.List;
 

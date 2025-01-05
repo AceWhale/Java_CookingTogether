@@ -1,4 +1,4 @@
-package com.cookingtogether.hibernate;
+package com.cookingtogether;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
