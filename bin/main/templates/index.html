@@ -22,19 +22,25 @@
         <div class="recipe-container">
           <!-- Динамическая загрузка рецептов с использованием Thymeleaf -->
           <div th:each="recipe : ${recipes}" class="recipe-item">
-    <h2 class="recipe-title" th:text="${recipe.title}">Рецепт</h2>
-    <div class="recipe-content">
-        <ul>
-            <li><strong>Ингредиенты:</strong></li>
-            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ингредиент</li>
-        </ul>
-        <p><strong>Шаги:</strong> <span th:text="${recipe.steps}"></span></p>
-        <p><strong>Рейтинг:</strong> <span th:text="${recipe.rating}"></span></p>
+  <h2 class="recipe-title" th:text="${recipe.title}">Рецепт</h2>
+  <div class="recipe-content">
+    <!-- Отображение изображения рецепта -->
+    <div class="recipe-image">
+      <img th:if="${recipe.imagePath}" th:src="@{${recipe.imagePath}}" alt="Изображение рецепта" class="img-fluid" style="max-width: 100%; height: auto;">
     </div>
-    <div class="read-more">
-        <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="read-more-link">Читать далее →</a>
-    </div>
+
+    <ul>
+      <li><strong>Ингредиенты:</strong></li>
+      <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ингредиент</li>
+    </ul>
+    <p><strong>Шаги:</strong> <span th:text="${recipe.steps}"></span></p>
+    <p><strong>Рейтинг:</strong> <span th:text="${recipe.rating}"></span></p>
+  </div>
+  <div class="read-more">
+    <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="read-more-link">Читать далее →</a>
+  </div>
 </div>
+
 
 
         </div>

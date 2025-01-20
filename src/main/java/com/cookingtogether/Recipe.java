@@ -9,6 +9,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class Recipe {
 
     /** Идентификатор блога, к которому относится рецепт. */
     private int blogId;
+    
+    /** Имя файла изображения рецепта. */
+    @Lob
+    private String imagePath;
 
     /** Название рецепта. */
     private String title;
@@ -55,6 +60,7 @@ public class Recipe {
         this.ingredients = null;
         this.steps = "empty";
         this.rating = 0;
+        this.imagePath = "";
     }
 
     /**
@@ -125,4 +131,13 @@ public class Recipe {
     public void setRating(float rating) {
         this.rating = rating;
     }
+    
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
 }

@@ -8,30 +8,56 @@
 </head>
 <body>
     <div class="container">
-        <h1>Создать новый рецепт</h1>
-        <form action="/create" method="post">
-            <div class="mb-3">
-                <label for="blogId" class="form-label">Идентификатор блога</label>
-                <input type="number" class="form-control" id="blogId" name="blogId" required />
-            </div>
-            <div class="mb-3">
-                <label for="title" class="form-label">Название рецепта</label>
-                <input type="text" class="form-control" id="title" name="title" required />
-            </div>
-            <div class="mb-3">
-                <label for="ingredients" class="form-label">Ингредиенты</label>
-                <textarea class="form-control" id="ingredients" name="ingredients" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="steps" class="form-label">Шаги приготовления</label>
-                <textarea class="form-control" id="steps" name="steps" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="rating" class="form-label">Рейтинг</label>
-                <input type="number" step="0.1" class="form-control" id="rating" name="rating" required />
-            </div>
-            <button type="submit" class="btn btn-primary">Создать рецепт</button>
-        </form>
+  <h2 class="text-center my-4">Создание нового рецепта</h2>
+  <form th:action="@{/create}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+    <!-- Название рецепта -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Название рецепта:</label>
+      <input type="text" id="title" name="title" class="form-control" required placeholder="Введите название">
+      <div class="invalid-feedback">Введите название рецепта.</div>
     </div>
+
+    <!-- Идентификатор блога -->
+    <div class="mb-3">
+      <label for="blogId" class="form-label">Идентификатор блога:</label>
+      <input type="number" id="blogId" name="blogId" class="form-control" required placeholder="Введите ID блога">
+      <div class="invalid-feedback">Введите идентификатор блога.</div>
+    </div>
+
+    <!-- Ингредиенты -->
+    <div class="mb-3">
+      <label for="ingredients" class="form-label">Ингредиенты:</label>
+      <textarea id="ingredients" name="ingredients" class="form-control" rows="3" required placeholder="Введите ингредиенты через запятую"></textarea>
+      <div class="invalid-feedback">Введите хотя бы один ингредиент.</div>
+    </div>
+
+    <!-- Шаги приготовления -->
+    <div class="mb-3">
+      <label for="steps" class="form-label">Шаги приготовления:</label>
+      <textarea id="steps" name="steps" class="form-control" rows="5" required placeholder="Опишите шаги приготовления"></textarea>
+      <div class="invalid-feedback">Опишите шаги приготовления.</div>
+    </div>
+
+    <!-- Рейтинг -->
+    <div class="mb-3">
+      <label for="rating" class="form-label">Рейтинг:</label>
+      <input type="number" id="rating" name="rating" class="form-control" min="0" max="5" step="0.1" required placeholder="Введите рейтинг от 0 до 5">
+      <div class="invalid-feedback">Введите корректный рейтинг.</div>
+    </div>
+
+    <!-- Загрузка изображения -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Загрузить изображение:</label>
+      <input type="file" id="image" name="image" class="form-control" accept="image/*">
+      <div class="form-text">Загрузите изображение рецепта (необязательно).</div>
+    </div>
+
+    <!-- Кнопка отправки -->
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary">Создать рецепт</button>
+    </div>
+  </form>
+</div>
+
 </body>
 </html>
