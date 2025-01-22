@@ -86,19 +86,19 @@ public class UserController {
             @RequestParam(name = "pass") String pass) {
         if ("PUT".equalsIgnoreCase(_method) && id != null) {
             return userRepository.findById(id).map(user -> {
-                user.setName(name);
+                user.setUsername(name);
                 user.setEmail(email);
                 user.setPass(pass);
                 userRepository.save(user);
-                return ResponseEntity.ok("USER UPDATED: " + user.getName());
+                return ResponseEntity.ok("USER UPDATED: " + user.getUsername());
             }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
         } else {
             var newUser = new User();
-            newUser.setName(name);
+            newUser.setUsername(name);
             newUser.setEmail(email);
             newUser.setPass(pass);
             userRepository.save(newUser);
-            return ResponseEntity.status(HttpStatus.CREATED).body("USER CREATED: " + newUser.getName());
+            return ResponseEntity.status(HttpStatus.CREATED).body("USER CREATED: " + newUser.getUsername());
         }
     }
 }

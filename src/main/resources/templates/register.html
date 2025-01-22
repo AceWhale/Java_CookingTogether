@@ -13,35 +13,50 @@
 
 	<div class="form-grid">
 		<form id="createUserForm" action="/user" method="post">
-			<h2>Register</h2>
-			<label for="createName">Name:</label> <input type="text"
-				id="createName" name="name" placeholder="Введите имя" required>
-			<label for="createEmail">Email:</label> <input type="email"
-				id="createEmail" name="email" placeholder="Введите email" required>
-			<label for="createPass">Password:</label> <input type="password"
-				id="createPass" name="pass" placeholder="Введите " required>
-			<button type="submit">Register</button>
+			<h2>Регистрация</h2>
+
+			<label for="createName">Имя:</label> 
+			<input type="text" id="createName" name="name" placeholder="Введите имя" required>
+
+			<label for="createEmail">Email:</label> 
+			<input type="email" id="createEmail" name="email" placeholder="Введите email" required>
+
+			<label for="createPass">Пароль:</label> 
+			<input type="password" id="createPass" name="pass" placeholder="Введите пароль" required>
+
+			<button type="submit">Зарегистрироваться</button>
 		</form>
 
+		<!-- Для отображения результата -->
+		<div id="resultText" class="message"></div>
 	</div>
 
 	<script>
 	document.getElementById('createUserForm').addEventListener('submit', function(event) {
 	    event.preventDefault();
-	    const formData = new FormData(this);
 	    
-	    // Печать данных формы
-	    for (let [key, value] of formData.entries()) {
-	        console.log(key + ": " + value);
-	    }
+	    const formData = new FormData(this);
 
 	    fetch(this.action, {
 	        method: 'POST',
 	        body: formData
 	    })
-	    .then(response => response.text())
+	    .then(response => {
+	        if (response.ok) {
+	            return response.text();
+	        } else {
+	            throw new Error('Ошибка регистрации');
+	        }
+	    })
 	    .then(message => {
-	        document.getElementById('resultText').textContent = message;
+	        const resultText = document.getElementById('resultText');
+	        resultText.textContent = message;
+	        resultText.className = 'message success';
+	    })
+	    .catch(error => {
+	        const resultText = document.getElementById('resultText');
+	        resultText.textContent = error.message;
+	        resultText.className = 'message error';
 	    });
 	});
     </script>

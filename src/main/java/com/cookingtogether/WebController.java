@@ -11,13 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WebController {
 
 
-    /**
-     * Обрабатывает запрос к странице регистрации.
-     *
-     * @return имя шаблона страницы регистрации ("register").
-     */
-    @GetMapping("register")
-    public String register() {
-        return "register";
-    }
+    
+    
 }
