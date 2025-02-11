@@ -7,8 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.cookingtogether.Blog;
+import com.cookingtogether.Comment;
 import com.cookingtogether.repository.BlogRepo;
 import com.cookingtogether.service.BlogService;
+import com.cookingtogether.service.CommentService;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,9 @@ public class BlogController {
     
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private CommentService commentService;
 
     /**
      * Получить список всех блогов.
@@ -76,18 +81,18 @@ public class BlogController {
     
     @GetMapping("/{slug}")
     public String getBlogBySlug(@PathVariable("slug") String slug, Model model) {
-        System.out.println("Получен slug: " + slug);
-        
         Optional<Blog> blog = blogService.getBlogBySlug(slug);
         if (blog.isPresent()) {
-            System.out.println("Найден блог: " + blog.get());
             model.addAttribute("blog", blog.get());
-            return "blog-details"; // Название шаблона страницы одного блога
+            model.addAttribute("recipe", blog.get().getRecipe()); // Добавляем рецепт
+            
+            List<Comment> comments = commentService.getCommentsByRecipe(blog.get().getRecipe().getId());
+            model.addAttribute("comments", comments);
+            
+            return "blog-details"; // Название шаблона для страницы блога
         } else {
-            System.out.println("Блог не найден!");
+            return "redirect:/blogs"; // Перенаправляем на список блогов, если блог не найден
         }
-
-        return "redirect:/blogs"; // Если блог не найден, перенаправляем на список блогов
     }
 
 

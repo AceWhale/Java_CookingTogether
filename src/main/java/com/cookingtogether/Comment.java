@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -20,11 +22,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    /** Идентификатор рецепта, к которому относится комментарий. */
-    private int recipeId;
+    @ManyToOne
+    @JoinColumn(name = "recipe", nullable = false)
+    private Recipe recipe;
 
-    /** Идентификатор пользователя, который оставил комментарий. */
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user", nullable = false)
+    private User user;
 
     /** Текст комментария. */
     private String commentText;
@@ -37,11 +41,16 @@ public class Comment {
      * @param userId      идентификатор пользователя.
      * @param commentText текст комментария.
      */
-    public Comment(int id, int recipeId, int userId, String commentText) {
+    public Comment(int id, Recipe recipe, User user, String commentText) {
         this.id = id;
-        this.recipeId = recipeId;
-        this.userId = userId;
+        this.recipe = recipe;
+        this.user = user;
         this.commentText = commentText;
+    }
+    
+    public Comment() {
+    	this.id = 0;
+        this.commentText = "";
     }
 
     /**
@@ -67,8 +76,8 @@ public class Comment {
      *
      * @return идентификатор рецепта.
      */
-    public int getRecipeId() {
-        return recipeId;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
     /**
@@ -76,8 +85,8 @@ public class Comment {
      *
      * @param recipeId идентификатор рецепта.
      */
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     /**
@@ -85,8 +94,8 @@ public class Comment {
      *
      * @return идентификатор пользователя.
      */
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     /**
@@ -94,8 +103,8 @@ public class Comment {
      *
      * @param userId идентификатор пользователя.
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**

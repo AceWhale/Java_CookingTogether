@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cookingtogether.Comment;
+import com.cookingtogether.Recipe;
+import com.cookingtogether.User;
 
 import java.util.List;
 
@@ -33,4 +35,8 @@ public interface CommentRepo extends JpaRepository<Comment, Integer> {
      * @return список комментариев, связанных с данным пользователем.
      */
     List<Comment> findByUserId(int userId);
+    
+    List<Comment> findByRecipe(Recipe recipe);
+
+    List<Comment> findByUser(User user);
 }
