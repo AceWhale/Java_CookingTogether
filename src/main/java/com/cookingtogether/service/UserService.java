@@ -48,8 +48,7 @@ public class UserService {
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
-    
-    
+
     /**
      * Создает нового пользователя и сохраняет его в базе данных.
      *
@@ -60,7 +59,7 @@ public class UserService {
     @Transactional
     public void saveUser(String name, String email, String pass) {
         User newUser = new User();
-        newUser.setUsername(name);
+        newUser.setName(name);
         newUser.setEmail(email);
         newUser.setPass(pass);
         userRepository.save(newUser);
@@ -77,7 +76,7 @@ public class UserService {
     @Transactional
     public void updateUser(Long id, String name, String email) {
         User user = findUserById(id);
-        user.setUsername(name);
+        user.setName(name);
         user.setEmail(email);
         userRepository.save(user);
     }

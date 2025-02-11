@@ -2,10 +2,13 @@ package com.cookingtogether.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.cookingtogether.Blog;
 import com.cookingtogether.repository.BlogRepo;
+import com.cookingtogether.service.BlogService;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +21,15 @@ import java.util.Optional;
  * 
  * @see Blog
  */
-@RestController
-@RequestMapping("/api/blogs")
+@Controller
+@RequestMapping(value = "/blogs", produces = "text/html; charset=UTF-8")
 public class BlogController {
 
     @Autowired
     private BlogRepo blogRepo;
+    
+    @Autowired
+    private BlogService blogService;
 
     /**
      * Получить список всех блогов.
@@ -31,8 +37,17 @@ public class BlogController {
      * @return список блогов.
      */
     @GetMapping
-    public List<Blog> getAllBlogs() {
-        return blogRepo.findAll();
+    public String getAllBlogs(Model model) {
+        List<Blog> blogs = blogRepo.findAll();
+        model.addAttribute("blogs", blogs);
+        return "blog"; // Имя HTML-файла в папке templates
+    }
+    @GetMapping("/view")
+    public String viewBlogs(Model model) {
+        List<Blog> blogs = blogRepo.findAll();
+        System.out.println("Загруженные блоги: " + blogs);
+        model.addAttribute("blogs", blogs);
+        return "blog";
     }
 
     /**
@@ -41,11 +56,12 @@ public class BlogController {
      * @param id идентификатор блога.
      * @return объект {@link Blog} или статус 404, если блог не найден.
      */
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<Blog> getBlogById(@PathVariable int id) {
         Optional<Blog> blog = blogRepo.findById(id);
         return blog.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    */
 
     /**
      * Создать новый блог.
@@ -57,6 +73,23 @@ public class BlogController {
     public Blog createBlog(@RequestBody Blog blog) {
         return blogRepo.save(blog);
     }
+    
+    @GetMapping("/{slug}")
+    public String getBlogBySlug(@PathVariable("slug") String slug, Model model) {
+        System.out.println("Получен slug: " + slug);
+        
+        Optional<Blog> blog = blogService.getBlogBySlug(slug);
+        if (blog.isPresent()) {
+            System.out.println("Найден блог: " + blog.get());
+            model.addAttribute("blog", blog.get());
+            return "blog-details"; // Название шаблона страницы одного блога
+        } else {
+            System.out.println("Блог не найден!");
+        }
+
+        return "redirect:/blogs"; // Если блог не найден, перенаправляем на список блогов
+    }
+
 
     /**
      * Обновить существующий блог.

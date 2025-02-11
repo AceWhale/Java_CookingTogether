@@ -49,4 +49,8 @@ public interface BlogRepo extends JpaRepository<Blog, Integer> {
      * @return объект {@link Blog}, соответствующий указанному названию.
      */
     Blog findByTitle(String title);
+    
+    Blog findBySlug(String slug);
 }
+
+

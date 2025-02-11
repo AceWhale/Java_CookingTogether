@@ -68,6 +68,10 @@ public class BlogService {
             return blogRepo.save(existingBlog);
         });
     }
+    
+    public Optional<Blog> getBlogBySlug(String slug) {
+        return Optional.ofNullable(blogRepo.findBySlug(slug));
+    }
 
     /**
      * Удалить блог по ID.

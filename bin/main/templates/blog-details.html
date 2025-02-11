@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${blog.title}"></title>
+</head>
+<body>
+    <h1 th:text="${blog.title}"></h1>
+    <p th:text="${blog.description}"></p>
+    <p>Дата создания: <span th:text="${blog.createdAt}"></span></p>
+</body>
+</html>

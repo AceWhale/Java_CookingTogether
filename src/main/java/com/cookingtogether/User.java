@@ -1,47 +1,77 @@
 package com.cookingtogether;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
-import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
-
+/**
+ * Сущность, представляющая пользователя в системе.
+ */
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
 
+    /**
+     * Версия сущности для контроля конкурентного доступа.
+     */
+    @Version
+    private Long version;
+
+    /**
+     * Уникальный идентификатор пользователя.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Имя пользователя.
+     */
     private String username;
-    private String email;
-    private String password;
-    private String role;
 
+    /**
+     * Электронная почта пользователя.
+     */
+    private String email;
+
+    /**
+     * Пароль пользователя.
+     */
+    private String password;
+
+    /**
+     * Роль пользователя (например, "USER").
+     */
+    private String role;
+    
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Recipe recipe;
 
-    // Конструктор без параметров
+    /**
+     * Конструктор без параметров. По умолчанию устанавливает роль "USER".
+     */
     public User() {
         this.role = "USER";
     }
 
-    // Конструктор с параметрами
+    /**
+     * Конструктор для создания пользователя с заданным именем, почтой и паролем.
+     * По умолчанию устанавливает роль "USER".
+     *
+     * @param username имя пользователя.
+     * @param email    электронная почта пользователя.
+     * @param password пароль пользователя.
+     */
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = "USER";
-    }
-
-    // Геттеры и сеттеры (сохраните ваши текущие методы)
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role));
     }
 
     /**
@@ -67,7 +97,7 @@ public class User implements UserDetails {
      *
      * @return имя пользователя.
      */
-    public String getUsername() {
+    public String getName() {
         return username;
     }
 
@@ -76,7 +106,7 @@ public class User implements UserDetails {
      *
      * @param username имя пользователя.
      */
-    public void setUsername(String username) {
+    public void setName(String username) {
         this.username = username;
     }
 
@@ -103,7 +133,7 @@ public class User implements UserDetails {
      *
      * @return пароль пользователя.
      */
-    public String getPassword() {
+    public String getPass() {
         return password;
     }
 
@@ -124,26 +154,4 @@ public class User implements UserDetails {
     public String getRole() {
         return role;
     }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
 }
-

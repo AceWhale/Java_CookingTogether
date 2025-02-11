@@ -1,11 +1,16 @@
 package com.cookingtogether;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Date;
+import org.apache.commons.lang3.StringUtils;
+import jakarta.persistence.*;
 
 /**
  * Класс, представляющий блог, содержащий информацию о рецептах и их описаниях.
@@ -46,6 +51,24 @@ public class Blog {
      * Дата последнего обновления блога.
      */
     private Date updatedAt;
+    
+    @Column(unique = true, nullable = false)
+    private String slug;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipe_id", referencedColumnName = "id")
+    private Recipe recipe;
+
+    
+    public Blog() {
+    	this.id = 0;
+        this.userId = 0;
+        this.title = "";
+        this.description = "";
+        this.slug = "";
+        this.createdAt = null;
+        this.updatedAt = null;
+    }
 
     /**
      * Конструктор для создания нового объекта блога с заданными параметрами.
@@ -64,6 +87,25 @@ public class Blog {
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.slug = generateSlug(title);
+    }
+    
+    private String generateSlug(String title) {
+        return StringUtils.stripAccents(title)
+                .toLowerCase()
+                .replaceAll("[^a-z0-9\\s]", "")
+                .replaceAll("\\s+", "-");
+    }
+    
+    @PrePersist
+    @PreUpdate
+    public void preSave() {
+        this.slug = generateSlug(this.title);
+    }
+
+    // Геттеры и сеттеры
+    public String getSlug() {
+        return slug;
     }
 
     /**
@@ -172,5 +214,15 @@ public class Blog {
      */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+ // Геттер для Thymeleaf
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    // Сеттер
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

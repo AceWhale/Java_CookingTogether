@@ -1,6 +1,5 @@
 package com.cookingtogether.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
 
 import com.cookingtogether.Recipe;
 import com.cookingtogether.repository.RecipeRepo;
@@ -26,7 +22,6 @@ public class RecipeController {
 
     private final RecipeRepo recipeRepository;
 
-    @Autowired
     public RecipeController(RecipeRepo recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
