@@ -116,6 +116,11 @@ public class UserController {
         }
     }
     
+    /**
+     * Получает имя текущего авторизованного пользователя.
+     * 
+     * @return имя пользователя или "anonymous", если пользователь не авторизован.
+     */
     @GetMapping("/auth/currentUser")
     public String getCurrentUser() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

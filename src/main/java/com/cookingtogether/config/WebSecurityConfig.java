@@ -14,53 +14,86 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 import com.cookingtogether.repository.UserRepo; // Репозиторий для пользователей
 
+/**
+ * Конфигурация безопасности для веб-приложения.
+ * Включает настройки авторизации, аутентификации, а также обработку логина и логаута.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
     private final UserRepo userRepo;
 
+    /**
+     * Конструктор конфигурации безопасности.
+     * 
+     * @param userRepo Репозиторий для пользователей, используется для поиска пользователей по имени.
+     */
     public WebSecurityConfig(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
+    /**
+     * Бин для создания пароля с использованием алгоритма BCrypt.
+     * 
+     * @return PasswordEncoder для кодирования паролей.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // Убедитесь, что используете BCrypt
     }
 
+    /**
+     * Бин для создания сервиса, который загружает пользователей по имени.
+     * 
+     * @return UserDetailsService для работы с пользователями.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    /**
+     * Конфигурирует безопасность HTTP, включая управление доступом, страницу логина и обработку выхода.
+     * 
+     * @param http Объект для настройки HTTP безопасности.
+     * @return Конфигурированная цепочка безопасности.
+     * @throws Exception Если возникает ошибка при настройке безопасности.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
+            .csrf().disable() // Отключаем защиту от CSRF (если необходимо)
             .authorizeRequests()
-            	.requestMatchers("/create", "/blogs/create/**", "/blogs/{slug}/comment").authenticated()
-                .requestMatchers("/**").permitAll() // Права доступа
+                .requestMatchers("/create", "/blogs/create/**", "/blogs/{slug}/comment").authenticated() // Требует аутентификации
+                .requestMatchers("/**").permitAll() // Доступ ко всем остальным страницам открыт для всех
                 .anyRequest().authenticated() // Все остальные страницы требуют авторизации
             .and()
             .formLogin()
                 .loginPage("/auth/login") // Страница логина
-                .loginProcessingUrl("/login") // URL, по которому будет отправляться форма логина
-                .defaultSuccessUrl("/", true) // Страница, куда перенаправляется после успешного входа
-                .failureUrl("/auth/login?error=true") // URL для отображения ошибки
+                .loginProcessingUrl("/login") // URL для обработки логина
+                .defaultSuccessUrl("/", true) // Страница для перенаправления после успешного входа
+                .failureUrl("/auth/login?error=true") // Страница для отображения ошибки
                 .permitAll()
             .and()
             .logout()
-            	.logoutUrl("/logout")  // URL для выхода
-            	.logoutSuccessUrl("/") // Перенаправление после выхода
-            	.invalidateHttpSession(true)  // Очищаем сессию при выходе
-            	.clearAuthentication(true)   // Очищаем информацию об авторизации
-            	.permitAll();
+                .logoutUrl("/logout") // URL для выхода
+                .logoutSuccessUrl("/") // Страница для перенаправления после выхода
+                .invalidateHttpSession(true) // Очищаем сессию после выхода
+                .clearAuthentication(true) // Очищаем информацию о пользователе
+                .permitAll();
         return http.build();
     }
 
-    // Добавьте этот метод для настройки AuthenticationManager
+    /**
+     * Бин для конфигурации AuthenticationManager.
+     * Используется для управления аутентификацией пользователей.
+     * 
+     * @param http Объект для настройки HTTP безопасности.
+     * @return Конфигурированный AuthenticationManager.
+     * @throws Exception Если возникает ошибка при создании AuthenticationManager.
+     */
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = 

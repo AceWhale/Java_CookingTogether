@@ -41,7 +41,7 @@ public class Recipe {
     /** Название рецепта. */
     private String title;
 
-    /** Массив ингредиентов рецепта. */
+    /** Список ингредиентов рецепта. */
     @ElementCollection
     @Column(name = "ingredient")
     private List<String> ingredients;
@@ -53,6 +53,9 @@ public class Recipe {
     /** Рейтинг рецепта. */
     private float rating;
     
+    /**
+     * Конструктор по умолчанию, создающий пустой объект рецепта.
+     */
     public Recipe() {
         this.id = 0;
         this.blogId = 0;
@@ -64,10 +67,9 @@ public class Recipe {
     }
 
     /**
-     * Конструктор для создания объекта рецепта.
+     * Конструктор для создания объекта рецепта с параметрами.
      *
      * @param id          уникальный идентификатор рецепта.
-     * @param user        пользователь, создавший рецепт.
      * @param blogId      идентификатор блога, к которому относится рецепт.
      * @param title       название рецепта.
      * @param ingredients список ингредиентов для рецепта.
@@ -83,68 +85,146 @@ public class Recipe {
         this.rating = rating;
     }
 
-    // Геттеры и сеттеры для всех полей
-
+    /**
+     * Получает уникальный идентификатор рецепта.
+     *
+     * @return идентификатор рецепта.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Устанавливает идентификатор рецепта.
+     *
+     * @param id идентификатор рецепта.
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Получает пользователя, который создал рецепт.
+     *
+     * @return объект {@link User}, представляющий создателя рецепта.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Устанавливает пользователя, который создал рецепт.
+     *
+     * @param user объект {@link User}, представляющий создателя рецепта.
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Получает идентификатор блога, к которому относится рецепт.
+     *
+     * @return идентификатор блога.
+     */
     public int getBlogId() {
         return blogId;
     }
 
+    /**
+     * Устанавливает идентификатор блога, к которому относится рецепт.
+     *
+     * @param blogId идентификатор блога.
+     */
     public void setBlogId(int blogId) {
         this.blogId = blogId;
     }
 
+    /**
+     * Получает название рецепта.
+     *
+     * @return название рецепта.
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Устанавливает название рецепта.
+     *
+     * @param title название рецепта.
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Получает список ингредиентов рецепта.
+     *
+     * @return список ингредиентов.
+     */
     public List<String> getIngredients() {
         return ingredients;
     }
 
+    /**
+     * Устанавливает список ингредиентов рецепта.
+     *
+     * @param ingredients список ингредиентов.
+     */
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
+    /**
+     * Получает шаги приготовления рецепта.
+     *
+     * @return шаги приготовления.
+     */
     public String getSteps() {
         return steps;
     }
 
+    /**
+     * Устанавливает шаги приготовления рецепта.
+     *
+     * @param steps шаги приготовления.
+     */
     public void setSteps(String steps) {
         this.steps = steps;
     }
 
+    /**
+     * Получает рейтинг рецепта.
+     *
+     * @return рейтинг рецепта.
+     */
     public float getRating() {
         return rating;
     }
 
+    /**
+     * Устанавливает рейтинг рецепта.
+     *
+     * @param rating рейтинг рецепта.
+     */
     public void setRating(float rating) {
         this.rating = rating;
     }
     
+    /**
+     * Получает путь к изображению рецепта.
+     *
+     * @return путь к изображению.
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * Устанавливает путь к изображению рецепта.
+     *
+     * @param imagePath путь к изображению.
+     */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }

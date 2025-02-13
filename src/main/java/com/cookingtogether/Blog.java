@@ -1,69 +1,67 @@
 package com.cookingtogether;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import java.sql.Date;
-import java.time.LocalDateTime;
-
-import org.apache.commons.lang3.StringUtils;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * Класс, представляющий блог, содержащий информацию о рецептах и их описаниях.
- * Этот класс используется для хранения информации о блоге в базе данных.
+ * Представляет блог, содержащий информацию о рецептах и их описаниях.
+ * Этот класс используется для хранения данных о блоге в базе данных.
  */
 @Entity
 @Table(name = "blogs")
 public class Blog {
 
     /**
-     * Идентификатор блога.
+     * Уникальный идентификатор блога.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     /**
      * Идентификатор пользователя, который создал блог.
      */
     private Long userId;
-    
+
     /**
      * Заголовок блога.
      */
     private String title;
-    
+
     /**
      * Описание блога.
      */
     private String description;
-    
+
     /**
      * Дата создания блога.
      */
     private LocalDateTime createdAt;
-    
+
     /**
      * Дата последнего обновления блога.
      */
     private LocalDateTime updatedAt;
-    
+
+    /**
+     * Уникальный URL-идентификатор блога (slug).
+     */
     @Column(unique = true, nullable = false)
     private String slug;
-    
+
+    /**
+     * Связанный рецепт блога.
+     */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipe recipe;
 
-    
+    /**
+     * Конструктор без параметров, инициализирует пустой объект блога.
+     */
     public Blog() {
-    	this.id = 0;
+        this.id = 0;
         this.userId = null;
         this.title = "";
         this.description = "";
@@ -73,14 +71,14 @@ public class Blog {
     }
 
     /**
-     * Конструктор для создания нового объекта блога с заданными параметрами.
-     * 
-     * @param id Идентификатор блога.
-     * @param userId Идентификатор пользователя.
-     * @param title Заголовок блога.
-     * @param description Описание блога.
-     * @param createdAt Дата создания блога.
-     * @param updatedAt Дата последнего обновления блога.
+     * Создает блог с указанными параметрами.
+     *
+     * @param id          идентификатор блога
+     * @param userId      идентификатор пользователя
+     * @param title       заголовок блога
+     * @param description описание блога
+     * @param createdAt   дата создания блога
+     * @param updatedAt   дата последнего обновления
      */
     public Blog(int id, long userId, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -91,139 +89,90 @@ public class Blog {
         this.updatedAt = updatedAt;
         this.slug = generateSlug(title);
     }
-    
+
+    /**
+     * Генерирует slug из заголовка блога.
+     *
+     * @param title заголовок блога
+     * @return slug для URL
+     */
     private String generateSlug(String title) {
         return StringUtils.stripAccents(title)
                 .toLowerCase()
                 .replaceAll("[^a-z0-9\\s]", "")
                 .replaceAll("\\s+", "-");
     }
-    
+
+    /**
+     * Автоматически обновляет slug перед сохранением или обновлением записи.
+     */
     @PrePersist
     @PreUpdate
     public void preSave() {
         this.slug = generateSlug(this.title);
     }
 
-    // Геттеры и сеттеры
+    /**
+     * Получает slug блога.
+     *
+     * @return slug
+     */
     public String getSlug() {
         return slug;
     }
 
-    /**
-     * Получить идентификатор блога.
-     * 
-     * @return Идентификатор блога.
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * Установить идентификатор блога.
-     * 
-     * @param id Идентификатор блога.
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * Получить идентификатор пользователя, создавшего блог.
-     * 
-     * @return Идентификатор пользователя.
-     */
     public Long getUserId() {
         return userId;
     }
 
-    /**
-     * Установить идентификатор пользователя, создавшего блог.
-     * 
-     * @param long1 Идентификатор пользователя.
-     */
-    public void setUserId(Long long1) {
-        this.userId = long1;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    /**
-     * Получить заголовок блога.
-     * 
-     * @return Заголовок блога.
-     */
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Установить заголовок блога.
-     * 
-     * @param title Заголовок блога.
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     * Получить описание блога.
-     * 
-     * @return Описание блога.
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * Установить описание блога.
-     * 
-     * @param description Описание блога.
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     * Получить дату создания блога.
-     * 
-     * @return Дата создания блога.
-     */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    /**
-     * Установить дату создания блога.
-     * 
-     * @param localDateTime Дата создания блога.
-     */
-    public void setCreatedAt(LocalDateTime localDateTime) {
-        this.createdAt = localDateTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    /**
-     * Получить дату последнего обновления блога.
-     * 
-     * @return Дата последнего обновления блога.
-     */
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    /**
-     * Установить дату последнего обновления блога.
-     * 
-     * @param localDateTime Дата последнего обновления блога.
-     */
-    public void setUpdatedAt(LocalDateTime localDateTime) {
-        this.updatedAt = localDateTime;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
-    
- // Геттер для Thymeleaf
+
     public Recipe getRecipe() {
         return recipe;
     }
 
-    // Сеттер
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }

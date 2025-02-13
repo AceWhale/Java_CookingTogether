@@ -68,7 +68,13 @@ public class BlogService {
             return blogRepo.save(existingBlog);
         });
     }
-    
+
+    /**
+     * Получить блог по его слагу (URL-псевдоним).
+     *
+     * @param slug уникальный идентификатор блога в виде слага.
+     * @return объект {@link Blog}, если найден, иначе пустой Optional.
+     */
     public Optional<Blog> getBlogBySlug(String slug) {
         return Optional.ofNullable(blogRepo.findBySlug(slug));
     }

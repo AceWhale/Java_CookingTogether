@@ -41,14 +41,29 @@ public interface CommentRepo extends JpaRepository<Comment, Integer> {
      */
     List<Comment> findByUserId(int userId);
     
+    /**
+     * Найти все комментарии, связанные с данным рецептом.
+     *
+     * @param recipe объект рецепта.
+     * @return список комментариев, связанных с данным рецептом.
+     */
     List<Comment> findByRecipe(Recipe recipe);
 
+    /**
+     * Найти все комментарии, связанные с данным пользователем.
+     *
+     * @param user объект пользователя.
+     * @return список комментариев, созданных данным пользователем.
+     */
     List<Comment> findByUser(User user);
     
+    /**
+     * Удалить все комментарии, связанные с определённым рецептом.
+     *
+     * @param recipeId идентификатор рецепта.
+     */
     @Modifying
     @Transactional
     @Query("DELETE FROM Comment c WHERE c.recipe.id = :recipeId")
     void deleteByRecipeId(@Param("recipeId") int recipeId);
-    
-    
 }

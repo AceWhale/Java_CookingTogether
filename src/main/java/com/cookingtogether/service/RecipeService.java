@@ -7,11 +7,13 @@ import com.cookingtogether.Recipe;
 import com.cookingtogether.repository.RecipeRepo;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Сервис для работы с рецептами.
- * Использует репозиторий RecipeRepo для взаимодействия с базой данных.
+ * <p>
+ * Этот сервис использует {@link RecipeRepo} для выполнения операций с рецептами,
+ * включая получение, создание, обновление и удаление рецептов.
+ * </p>
  */
 @Service
 public class RecipeService {
@@ -20,9 +22,9 @@ public class RecipeService {
     private RecipeRepo recipeRepo;
 
     /**
-     * Найти все рецепты.
+     * Получить все рецепты.
      *
-     * @return Список всех рецептов.
+     * @return список всех рецептов.
      */
     public List<Recipe> getAllRecipes() {
         return recipeRepo.findAll();
@@ -31,8 +33,8 @@ public class RecipeService {
     /**
      * Найти рецепт по ID.
      *
-     * @param id Идентификатор рецепта.
-     * @return Рецепт с заданным ID.
+     * @param id идентификатор рецепта.
+     * @return рецепт с заданным ID, если он существует, иначе null.
      */
     public Recipe getRecipeById(int id) {
         return recipeRepo.findById(id).orElse(null);
@@ -41,28 +43,18 @@ public class RecipeService {
     /**
      * Найти рецепты по заголовку.
      *
-     * @param title Заголовок рецепта.
-     * @return Список рецептов с заданным заголовком.
+     * @param title заголовок рецепта.
+     * @return список рецептов с заданным заголовком.
      */
     public List<Recipe> getRecipesByTitle(String title) {
         return recipeRepo.findByTitle(title);
     }
 
     /**
-     * Найти рецепты по категории.
-     *
-     * @param category Категория рецепта.
-     * @return Список рецептов в заданной категории.
-     */
-    //public List<Recipe> getRecipesByCategory(String category) {
-    //    return recipeRepo.findByCategory(category);
-    //}
-
-    /**
      * Найти рецепты, созданные пользователем.
      *
-     * @param userId Идентификатор пользователя.
-     * @return Список рецептов, созданных указанным пользователем.
+     * @param userId идентификатор пользователя.
+     * @return список рецептов, созданных указанным пользователем.
      */
     public List<Recipe> getRecipesByUserId(Long userId) {
         return recipeRepo.findByUserId(userId);
@@ -71,8 +63,8 @@ public class RecipeService {
     /**
      * Сохранить новый рецепт.
      *
-     * @param recipe Новый рецепт для сохранения.
-     * @return Сохраненный рецепт.
+     * @param recipe новый рецепт для сохранения.
+     * @return сохраненный рецепт.
      */
     public Recipe saveRecipe(Recipe recipe) {
         return recipeRepo.save(recipe);
@@ -81,7 +73,7 @@ public class RecipeService {
     /**
      * Удалить рецепт по ID.
      *
-     * @param id Идентификатор рецепта для удаления.
+     * @param id идентификатор рецепта для удаления.
      */
     public void deleteRecipe(int id) {
         recipeRepo.deleteById(id);

@@ -19,22 +19,43 @@ import com.cookingtogether.repository.RecipeRepo;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Контроллер для управления рецептами.
+ * <p>
+ * Этот контроллер отвечает за отображение рецептов, создание новых рецептов и отображение подробной информации о рецепте.
+ * </p>
+ */
 @Controller
 public class RecipeController {
 
     private final RecipeRepo recipeRepository;
 
+    /**
+     * Конструктор для инициализации {@link RecipeController} с зависимостью от {@link RecipeRepo}.
+     *
+     * @param recipeRepository Репозиторий для работы с рецептами.
+     */
     public RecipeController(RecipeRepo recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
     
+    /**
+     * Тестовый метод для получения всех рецептов.
+     * 
+     * @return список всех рецептов.
+     */
     @GetMapping("/recipes/test")
     @ResponseBody
     public List<Recipe> testRecipes() {
         return recipeRepository.findAll();
     }
 
-    // Главная страница с рецептами
+    /**
+     * Отображает главную страницу с рецептом.
+     * 
+     * @param model модель для передачи данных в представление.
+     * @return имя шаблона для главной страницы с рецептами.
+     */
     @GetMapping("/")
     public String getRecipes(Model model) {
         List<Recipe> recipes = recipeRepository.findAll(); // Получаем все рецепты из базы
@@ -43,6 +64,12 @@ public class RecipeController {
         return "index";
     }
     
+    /**
+     * Получает рецепты пользователя по его ID.
+     * 
+     * @param userId идентификатор пользователя.
+     * @return список рецептов пользователя или 404, если рецепты не найдены.
+     */
     @GetMapping("/recipe/user/{userId}")
     public ResponseEntity<List<Recipe>> getRecipeByUserId(@PathVariable Long userId) {
         List<Recipe> recipes = recipeRepository.findByUserId(userId);
@@ -52,9 +79,13 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
-
-
-    // Страница с подробной информацией о рецепте
+    /**
+     * Отображает подробную информацию о рецепте.
+     * 
+     * @param id идентификатор рецепта.
+     * @param model модель для передачи данных в представление.
+     * @return имя шаблона для отображения подробностей рецепта.
+     */
     @GetMapping("/recipe/{id}")
     public String recipeDetails(@PathVariable int id, Model model) {
         Recipe recipe = recipeRepository.findById(id).orElse(null);
@@ -62,13 +93,28 @@ public class RecipeController {
         return "recipe_details";  // Шаблон для подробной информации
     }
 
-    // Страница для создания нового рецепта
+    /**
+     * Отображает страницу для создания нового рецепта.
+     * 
+     * @return имя шаблона для создания рецепта.
+     */
     @GetMapping("/create")
     public String createRecipeForm() {
         return "create_recipe";  // Шаблон для создания рецепта (например, форма)
     }
 
-    // Обработчик для создания рецепта
+    /**
+     * Обрабатывает создание нового рецепта.
+     * 
+     * @param title название рецепта.
+     * @param blogId идентификатор блога.
+     * @param ingredients ингредиенты рецепта, разделённые запятыми.
+     * @param steps шаги приготовления рецепта.
+     * @param rating рейтинг рецепта.
+     * @param imageFile изображение рецепта (необязательно).
+     * @param user текущий аутентифицированный пользователь.
+     * @return редирект на главную страницу или страницу с ошибкой, если изображение не удалось загрузить.
+     */
     @PostMapping("/create")
     public String createRecipe(
             @RequestParam("title") String title,
@@ -120,6 +166,4 @@ public class RecipeController {
 
         return "redirect:/";
     }
-
 }
-

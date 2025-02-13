@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 /**
  * Класс, представляющий комментарий к рецепту.
  * Используется для хранения информации о комментариях, таких как текст комментария, 
- * идентификатор рецепта и пользователя.
+ * рецепт, к которому он относится, и пользователь, оставивший комментарий.
  */
 @Entity
 @Table(name = "comments")
@@ -22,10 +22,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /** Рецепт, к которому относится комментарий. */
     @ManyToOne
     @JoinColumn(name = "recipe", nullable = false)
     private Recipe recipe;
 
+    /** Пользователь, оставивший комментарий. */
     @ManyToOne
     @JoinColumn(name = "user", nullable = false)
     private User user;
@@ -34,11 +36,11 @@ public class Comment {
     private String commentText;
 
     /**
-     * Конструктор для создания объекта комментария.
+     * Конструктор для создания нового комментария.
      *
      * @param id          уникальный идентификатор комментария.
-     * @param recipeId    идентификатор рецепта.
-     * @param userId      идентификатор пользователя.
+     * @param recipe      рецепт, к которому относится комментарий.
+     * @param user        пользователь, оставивший комментарий.
      * @param commentText текст комментария.
      */
     public Comment(int id, Recipe recipe, User user, String commentText) {
@@ -47,14 +49,18 @@ public class Comment {
         this.user = user;
         this.commentText = commentText;
     }
-    
+
+    /**
+     * Конструктор без параметров.
+     * Создает пустой объект комментария.
+     */
     public Comment() {
-    	this.id = 0;
+        this.id = 0;
         this.commentText = "";
     }
 
     /**
-     * Возвращает идентификатор комментария.
+     * Возвращает уникальный идентификатор комментария.
      *
      * @return уникальный идентификатор комментария.
      */
@@ -63,7 +69,7 @@ public class Comment {
     }
 
     /**
-     * Устанавливает идентификатор комментария.
+     * Устанавливает уникальный идентификатор комментария.
      *
      * @param id уникальный идентификатор комментария.
      */
@@ -72,36 +78,36 @@ public class Comment {
     }
 
     /**
-     * Возвращает идентификатор рецепта, к которому относится комментарий.
+     * Возвращает рецепт, к которому относится комментарий.
      *
-     * @return идентификатор рецепта.
+     * @return рецепт.
      */
     public Recipe getRecipe() {
         return recipe;
     }
 
     /**
-     * Устанавливает идентификатор рецепта, к которому относится комментарий.
+     * Устанавливает рецепт, к которому относится комментарий.
      *
-     * @param recipeId идентификатор рецепта.
+     * @param recipe рецепт.
      */
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 
     /**
-     * Возвращает идентификатор пользователя, который оставил комментарий.
+     * Возвращает пользователя, оставившего комментарий.
      *
-     * @return идентификатор пользователя.
+     * @return пользователь.
      */
     public User getUser() {
         return user;
     }
 
     /**
-     * Устанавливает идентификатор пользователя, который оставил комментарий.
+     * Устанавливает пользователя, оставившего комментарий.
      *
-     * @param userId идентификатор пользователя.
+     * @param user пользователь.
      */
     public void setUser(User user) {
         this.user = user;

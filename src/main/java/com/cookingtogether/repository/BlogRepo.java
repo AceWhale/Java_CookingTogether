@@ -50,7 +50,11 @@ public interface BlogRepo extends JpaRepository<Blog, Integer> {
      */
     Blog findByTitle(String title);
     
+    /**
+     * Метод для поиска блога по его уникальному slug.
+     *
+     * @param slug уникальный идентификатор блога в виде строки.
+     * @return объект {@link Blog}, соответствующий указанному slug.
+     */
     Blog findBySlug(String slug);
 }
-
-

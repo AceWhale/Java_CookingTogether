@@ -183,26 +183,51 @@ public class User implements UserDetails {
         this.recipes = recipes;
     }
 
+    /**
+     * Возвращает список прав (ролей) пользователя.
+     * 
+     * @return пустой список, так как роли не реализованы.
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // Упрощенный вариант без ролей
+        return Collections.emptyList();
     }
 
+    /**
+     * Проверяет, не истекла ли учетная запись пользователя.
+     *
+     * @return всегда {@code true}, так как срок действия аккаунта не контролируется.
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * Проверяет, не заблокирован ли пользователь.
+     *
+     * @return всегда {@code true}, так как блокировка аккаунта не реализована.
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * Проверяет, не истекли ли учетные данные пользователя (пароль).
+     *
+     * @return всегда {@code true}, так как срок действия пароля не контролируется.
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    /**
+     * Проверяет, активен ли пользователь.
+     *
+     * @return всегда {@code true}, так как механизм деактивации пользователей не реализован.
+     */
     @Override
     public boolean isEnabled() {
         return true;
