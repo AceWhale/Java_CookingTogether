@@ -16,8 +16,5 @@ public class WebController {
      *
      * @return имя шаблона страницы регистрации ("register").
      */
-    @GetMapping("register")
-    public String register() {
-        return "register";
-    }
+    
 }

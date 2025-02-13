@@ -25,7 +25,7 @@
         <h3>All Comments:</h3>
         <ul>
             <li th:each="comment : ${comments}">
-                <p><strong th:text="${comment.user.name}"></strong>: <span th:text="${comment.commentText}"></span></p>
+                <p><strong th:text="${comment.user.username}"></strong>: <span th:text="${comment.commentText}"></span></p>
             </li>
         </ul>
     </div>

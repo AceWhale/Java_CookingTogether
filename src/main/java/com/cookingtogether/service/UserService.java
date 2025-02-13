@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -57,11 +61,11 @@ public class UserService {
      * @param pass  пароль пользователя.
      */
     @Transactional
-    public void saveUser(String name, String email, String pass) {
+    public void saveUser(String name, String email, String password) {
         User newUser = new User();
-        newUser.setName(name);
+        newUser.setUsername(name);
         newUser.setEmail(email);
-        newUser.setPass(pass);
+        newUser.setPassword(passwordEncoder.encode(password)); // Шифруем пароль перед сохранением
         userRepository.save(newUser);
     }
 
@@ -76,7 +80,7 @@ public class UserService {
     @Transactional
     public void updateUser(Long id, String name, String email) {
         User user = findUserById(id);
-        user.setName(name);
+        user.setUsername(name);
         user.setEmail(email);
         userRepository.save(user);
     }

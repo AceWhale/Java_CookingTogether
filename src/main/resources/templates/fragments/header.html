@@ -11,6 +11,10 @@
       <a href="#" class="header-link">Обо мне</a>
       <a href="#" class="header-link">Обратная связь</a>
     </nav>
+    <div class="user-section">
+      <span id="user-info"></span>
+      <button id="auth-button" class="auth-button">Войти</button>
+    </div>
     <div class="image-section">
       <img src="Image/Nachalo.png" alt="Nachalo" class="main-image">
     </div>
@@ -20,3 +24,38 @@
   <input type="text" placeholder="Поиск" class="search-input">
   <button class="search-button">Найти</button>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const userInfo = document.getElementById("user-info");
+    const authButton = document.getElementById("auth-button");
+
+    // Запрос к серверу для проверки авторизации
+    fetch("/user/auth/currentUser")
+        .then(response => response.text())  // Получаем имя пользователя
+        .then(username => {
+            if (username !== "anonymous") {
+                // Если пользователь авторизован
+                userInfo.textContent = `Привет, ${username}!`;
+                authButton.textContent = "Выйти";
+                authButton.onclick = function () {
+                    // Отправляем запрос на выход
+                    fetch("/logout", { method: "POST" })
+                        .then(() => {
+                            location.reload();  // Перезагружаем страницу после выхода
+                        });
+                };
+            } else {
+                // Если пользователь не авторизован
+                userInfo.textContent = "";
+                authButton.textContent = "Войти";
+                authButton.onclick = function () {
+                    window.location.href = "/auth/login";  // Перенаправление на страницу логина
+                };
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+        });
+});
+</script>

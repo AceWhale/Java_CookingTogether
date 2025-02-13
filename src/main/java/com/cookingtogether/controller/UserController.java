@@ -1,5 +1,7 @@
 package com.cookingtogether.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,12 @@ import com.cookingtogether.service.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.OptimisticLockException;
+
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Контроллер для управления пользователями.
@@ -84,21 +92,43 @@ public class UserController {
             @RequestParam(name = "name") String name,
             @RequestParam(name = "email") String email,
             @RequestParam(name = "pass") String pass) {
+
         if ("PUT".equalsIgnoreCase(_method) && id != null) {
-            return userRepository.findById(id).map(user -> {
-                user.setName(name);
+            Optional<User> optionalUser = userRepository.findById(id);
+
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                user.setUsername(name);
                 user.setEmail(email);
-                user.setPass(pass);
+                user.setPassword(pass);
                 userRepository.save(user);
-                return ResponseEntity.ok("USER UPDATED: " + user.getName());
-            }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
+                return ResponseEntity.ok("USER UPDATED: " + user.getUsername());
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND");
+            }
         } else {
-            var newUser = new User();
-            newUser.setName(name);
+            User newUser = new User();
+            newUser.setUsername(name);
             newUser.setEmail(email);
-            newUser.setPass(pass);
+            newUser.setPassword(pass);
             userRepository.save(newUser);
-            return ResponseEntity.status(HttpStatus.CREATED).body("USER CREATED: " + newUser.getName());
+            return ResponseEntity.status(HttpStatus.CREATED).body("USER CREATED: " + newUser.getUsername());
         }
     }
+    
+    @GetMapping("/auth/currentUser")
+    public String getCurrentUser() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+            if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+                User user = (User) authentication.getPrincipal();
+                return user.getUsername();  // Возвращаем имя пользователя
+            }
+            return "anonymous";  // Возвращаем "anonymous", если пользователь не авторизован
+        } catch (Exception e) {
+            return "Error";  // Возвращаем ошибку, если возникла проблема
+        }
+    }
+
 }

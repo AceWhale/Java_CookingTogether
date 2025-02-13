@@ -60,6 +60,30 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 */ 
+
+
+.user-section {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-button {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.auth-button:hover {
+  background-color: #e68900;
+}
+
 .blog-container {
       margin-top: 30px;
     }
