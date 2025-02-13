@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Date;
+import java.time.LocalDateTime;
+
 import org.apache.commons.lang3.StringUtils;
 import jakarta.persistence.*;
 
@@ -30,7 +32,7 @@ public class Blog {
     /**
      * Идентификатор пользователя, который создал блог.
      */
-    private int userId;
+    private Long userId;
     
     /**
      * Заголовок блога.
@@ -45,12 +47,12 @@ public class Blog {
     /**
      * Дата создания блога.
      */
-    private Date createdAt;
+    private LocalDateTime createdAt;
     
     /**
      * Дата последнего обновления блога.
      */
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     
     @Column(unique = true, nullable = false)
     private String slug;
@@ -62,7 +64,7 @@ public class Blog {
     
     public Blog() {
     	this.id = 0;
-        this.userId = 0;
+        this.userId = null;
         this.title = "";
         this.description = "";
         this.slug = "";
@@ -80,7 +82,7 @@ public class Blog {
      * @param createdAt Дата создания блога.
      * @param updatedAt Дата последнего обновления блога.
      */
-    public Blog(int id, int userId, String title, String description, Date createdAt, Date updatedAt) {
+    public Blog(int id, long userId, String title, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.title = title;
@@ -131,17 +133,17 @@ public class Blog {
      * 
      * @return Идентификатор пользователя.
      */
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * Установить идентификатор пользователя, создавшего блог.
      * 
-     * @param userId Идентификатор пользователя.
+     * @param long1 Идентификатор пользователя.
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(Long long1) {
+        this.userId = long1;
     }
 
     /**
@@ -185,17 +187,17 @@ public class Blog {
      * 
      * @return Дата создания блога.
      */
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     /**
      * Установить дату создания блога.
      * 
-     * @param createdAt Дата создания блога.
+     * @param localDateTime Дата создания блога.
      */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedAt(LocalDateTime localDateTime) {
+        this.createdAt = localDateTime;
     }
 
     /**
@@ -203,17 +205,17 @@ public class Blog {
      * 
      * @return Дата последнего обновления блога.
      */
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
     /**
      * Установить дату последнего обновления блога.
      * 
-     * @param updatedAt Дата последнего обновления блога.
+     * @param localDateTime Дата последнего обновления блога.
      */
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdatedAt(LocalDateTime localDateTime) {
+        this.updatedAt = localDateTime;
     }
     
  // Геттер для Thymeleaf

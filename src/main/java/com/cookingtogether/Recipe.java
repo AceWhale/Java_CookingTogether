@@ -5,12 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
-
 
 import java.util.List;
 
@@ -27,8 +26,9 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    /** Связь с пользователем, который создал рецепт. */
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     /** Идентификатор блога, к которому относится рецепт. */
@@ -54,7 +54,7 @@ public class Recipe {
     private float rating;
     
     public Recipe() {
-    	this.id = 0;
+        this.id = 0;
         this.blogId = 0;
         this.title = "empty";
         this.ingredients = null;
@@ -67,6 +67,7 @@ public class Recipe {
      * Конструктор для создания объекта рецепта.
      *
      * @param id          уникальный идентификатор рецепта.
+     * @param user        пользователь, создавший рецепт.
      * @param blogId      идентификатор блога, к которому относится рецепт.
      * @param title       название рецепта.
      * @param ingredients список ингредиентов для рецепта.
@@ -90,6 +91,14 @@ public class Recipe {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getBlogId() {
@@ -139,5 +148,4 @@ public class Recipe {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-
 }

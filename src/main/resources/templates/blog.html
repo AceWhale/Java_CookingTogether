@@ -17,7 +17,7 @@
     <h1 class="text-center mb-4">Блоги</h1>
     <div th:each="blog : ${blogs}" class="blog-item">
       <h2 class="blog-title" th:text="${blog.title}">Название блога</h2>
-      <p th:text="'Дата создания: ' + ${#dates.format(blog.createdAt, 'dd.MM.yyyy')}">Дата создания</p>
+      <p>Дата создания: <span th:text="${blog.createdAt != null ? #temporals.format(blog.createdAt, 'dd.MM.yyyy') : 'Нет данных'}"></span></p>
       <p th:text="${blog.description}">Описание блога</p>
 	  <h4>Рецепт:</h4>
 	  <div th:if="${blog.recipe}">
@@ -29,7 +29,7 @@
 	  </div>
 	  <p th:if="${blog.recipe == null}">Рецепт отсутствует</p>
 
-	  <a th:href="@{/blogs/{id}(id=${blog.id})}" class="read-more-link">Читать далее →</a>
+	  <a th:href="@{/blogs/{slug}(slug=${blog.slug})}" class="read-more-link">Читать далее →</a>
 
     </div>
   </div>

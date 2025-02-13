@@ -1,6 +1,7 @@
 package com.cookingtogether.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cookingtogether.Recipe;
+import com.cookingtogether.User;
 import com.cookingtogether.repository.RecipeRepo;
 
 import java.util.Arrays;
@@ -42,11 +44,14 @@ public class RecipeController {
     }
     
     @GetMapping("/recipe/user/{userId}")
-    public ResponseEntity<Recipe> getRecipeByUserId(@PathVariable int userId) {
-        return recipeRepository.findByUserId(userId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<Recipe>> getRecipeByUserId(@PathVariable Long userId) {
+        List<Recipe> recipes = recipeRepository.findByUserId(userId);
+        if (recipes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(recipes);
     }
+
 
 
     // Страница с подробной информацией о рецепте
@@ -71,7 +76,8 @@ public class RecipeController {
             @RequestParam("ingredients") String ingredients,
             @RequestParam("steps") String steps,
             @RequestParam("rating") double rating,
-            @RequestPart(value = "image", required = false) MultipartFile imageFile) {
+            @RequestPart(value = "image", required = false) MultipartFile imageFile,
+            @AuthenticationPrincipal User user) {
         String imagePath = null;
 
         // Получаем абсолютный путь к папке для загрузки файлов
@@ -106,10 +112,14 @@ public class RecipeController {
         Recipe newRecipe = new Recipe(0, blogId, title, ingredientsList, steps, (float) rating);
         newRecipe.setImagePath(imagePath);
 
+        // Устанавливаем пользователя для рецепта
+        newRecipe.setUser(user);
+
         // Сохраняем рецепт в базе данных
         recipeRepository.save(newRecipe);
 
         return "redirect:/";
     }
+
 }
 

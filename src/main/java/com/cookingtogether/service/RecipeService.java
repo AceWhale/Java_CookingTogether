@@ -64,7 +64,7 @@ public class RecipeService {
      * @param userId Идентификатор пользователя.
      * @return Список рецептов, созданных указанным пользователем.
      */
-    public Optional<Recipe> getRecipesByUserId(int userId) {
+    public List<Recipe> getRecipesByUserId(Long userId) {
         return recipeRepo.findByUserId(userId);
     }
 

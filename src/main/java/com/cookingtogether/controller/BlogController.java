@@ -2,16 +2,24 @@ package com.cookingtogether.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.cookingtogether.Blog;
 import com.cookingtogether.Comment;
+import com.cookingtogether.Recipe;
+import com.cookingtogether.User;
 import com.cookingtogether.repository.BlogRepo;
+import com.cookingtogether.repository.RecipeRepo;
 import com.cookingtogether.service.BlogService;
 import com.cookingtogether.service.CommentService;
+import com.cookingtogether.service.UserService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +43,12 @@ public class BlogController {
 
     @Autowired
     private CommentService commentService;
+    
+    @Autowired
+    private RecipeRepo recipeRepository;
+    
+    @Autowired
+    private UserService userService;
 
     /**
      * Получить список всех блогов.
@@ -54,6 +68,49 @@ public class BlogController {
         model.addAttribute("blogs", blogs);
         return "blog";
     }
+    
+    @GetMapping("/create")
+    public String showCreateBlogForm(Model model, @AuthenticationPrincipal User user) {
+    	List<Recipe> recipes = recipeRepository.findByUserId(user.getId());
+    	if (recipes == null) {
+    	    recipes = Collections.emptyList();
+    	}
+    	model.addAttribute("recipes", recipes);
+        model.addAttribute("recipes", recipes);
+        return "blog-form";
+    }
+    
+    @PostMapping("/create")
+    public String createBlog(
+        @RequestParam(name = "title") String title,
+        @RequestParam(name = "description") String description,
+        @RequestParam(name = "recipeId") Integer recipeId,
+        @AuthenticationPrincipal User user) {
+
+        if (title == null || title.isBlank() || description == null || description.isBlank()) {
+            throw new IllegalArgumentException("Название и описание не могут быть пустыми");
+        }
+        
+        if (recipeId == null) {
+            throw new IllegalArgumentException("Выберите рецепт");
+        }
+
+
+        Recipe recipe = recipeRepository.findById(recipeId)
+            .orElseThrow(() -> new IllegalArgumentException("Рецепт не найден"));
+
+        Blog blog = new Blog();
+        blog.setTitle(title);
+        blog.setDescription(description);
+        blog.setUserId(user.getId()); // Устанавливаем ID пользователя
+        blog.setRecipe(recipe);
+        blog.setCreatedAt(LocalDateTime.now());
+        blog.setUpdatedAt(LocalDateTime.now());
+
+        blogRepo.save(blog);
+        return "redirect:/blogs";
+    }
+
 
     /**
      * Получить блог по ID.
@@ -75,7 +132,7 @@ public class BlogController {
      * @return созданный блог.
      */
     @PostMapping
-    public Blog createBlog(@RequestBody Blog blog) {
+    public Blog createNewBlog(@RequestBody Blog blog) {
         return blogRepo.save(blog);
     }
     
@@ -83,15 +140,24 @@ public class BlogController {
     public String getBlogBySlug(@PathVariable("slug") String slug, Model model) {
         Optional<Blog> blog = blogService.getBlogBySlug(slug);
         if (blog.isPresent()) {
-            model.addAttribute("blog", blog.get());
-            model.addAttribute("recipe", blog.get().getRecipe()); // Добавляем рецепт
+            Blog blogData = blog.get();
             
-            List<Comment> comments = commentService.getCommentsByRecipe(blog.get().getRecipe().getId());
+            // Форматируем дату перед добавлением в модель
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            String formattedCreatedAt = blogData.getCreatedAt().format(formatter);
+            String formattedUpdatedAt = blogData.getUpdatedAt().format(formatter);
+            
+            model.addAttribute("blog", blogData);
+            model.addAttribute("recipe", blogData.getRecipe());
+            model.addAttribute("createdAt", formattedCreatedAt);
+            model.addAttribute("updatedAt", formattedUpdatedAt);
+            
+            List<Comment> comments = commentService.getCommentsByRecipe(blogData.getRecipe().getId());
             model.addAttribute("comments", comments);
             
-            return "blog-details"; // Название шаблона для страницы блога
+            return "blog-details";
         } else {
-            return "redirect:/blogs"; // Перенаправляем на список блогов, если блог не найден
+            return "redirect:/blogs";
         }
     }
 

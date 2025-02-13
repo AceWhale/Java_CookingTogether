@@ -1,6 +1,5 @@
 package com.cookingtogether.service;
 
-import com.cookingtogether.User;
 import com.cookingtogether.repository.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

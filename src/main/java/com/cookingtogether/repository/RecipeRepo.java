@@ -34,8 +34,8 @@ public interface RecipeRepo extends JpaRepository<Recipe, Integer> {
     /**
      * Найти рецепты, созданные пользователем.
      *
-     * @param userId Идентификатор пользователя.
+     * @param long1 Идентификатор пользователя.
      * @return Список рецептов, созданных указанным пользователем.
      */
-    Optional<Recipe> findByUserId(int userId);
+    List<Recipe> findByUserId(Long long1);
 }

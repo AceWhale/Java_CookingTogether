@@ -6,26 +6,35 @@
 <body>
     <h1 th:text="${blog.title}"></h1>
     <p th:text="${blog.description}"></p>
-    <p>Дата создания: <span th:text="${#dates.format(blog.createdAt, 'dd.MM.yyyy')}"></span></p>
-    <p>Дата последнего обновления: <span th:text="${#dates.format(blog.updatedAt, 'dd.MM.yyyy')}"></span></p>
+    <p>Дата создания: <span th:text="${createdAt}"></span></p>
+    <p>Дата последнего обновления: <span th:text="${updatedAt}"></span></p>
 
-    <!-- Информация о рецепте -->
-    !-- Отображение изображения рецепта -->
+    <!-- Отображение изображения рецепта -->
     <div class="recipe-image">
-      <img th:if="${recipe.imagePath}" th:src="@{${recipe.imagePath}}" alt="Изображение рецепта" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img th:src="@{/{path}(path=${recipe.imagePath})}" 
+             alt="Изображение рецепта" class="img-fluid" style="max-width: 100%; height: auto;">
     </div>
 
     <ul>
-      <li><strong>Ингредиенты:</strong></li>
-      <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ингредиент</li>
+        <li><strong>Ингредиенты:</strong></li>
+        <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}"></li>
     </ul>
-    <p><strong>Шаги:</strong> <span th:text="${recipe.steps}"></span></p>
+
+    <p><strong>Шаги приготовления:</strong></p>
+    <ol>
+        <li th:each="step : ${recipe.steps}" th:text="${step}"></li>
+    </ol>
+
     <p><strong>Рейтинг:</strong> <span th:text="${recipe.rating}"></span></p>
+
     <div>
-        <h3>All Comments:</h3>
+        <h3>Все комментарии:</h3>
         <ul>
             <li th:each="comment : ${comments}">
-                <p><strong th:text="${comment.user.username}"></strong>: <span th:text="${comment.commentText}"></span></p>
+                <p>
+                    <strong th:text="${comment.user.username}"></strong>: 
+                    <span th:text="${comment.commentText}"></span>
+                </p>
             </li>
         </ul>
     </div>
