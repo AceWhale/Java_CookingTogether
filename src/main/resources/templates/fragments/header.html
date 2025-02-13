@@ -3,20 +3,22 @@
     <h1 class="header-title">Кулинарный блог о вкусной домашней еде</h1>
     <p class="header-subtitle">Простые и вкусные рецепты, авторские рецепты с фото, а также лучшие проверенные рецепты.</p>
     <nav class="header-menu">
-      <a href="#" class="header-link active">Главная</a>
-      <a href="#" class="header-link">Кулинарные советы</a>
-      <a href="#" class="header-link">События</a>
-      <a href="#" class="header-link">Таблица мер продуктов</a>
-      <a href="#" class="header-link">Это интересно</a>
-      <a href="#" class="header-link">Обо мне</a>
-      <a href="#" class="header-link">Обратная связь</a>
+      <a href="/" class="header-link active">Рецепты</a>
+      <a href="/blogs" class="header-link">Блоги</a>
+
+      <!-- Элементы, доступные только авторизованным пользователям -->
+      <a href="/create" class="header-link" id="create-recipe-link" style="display: none;">Создать рецепт</a>
+      <a href="/blogs/create" class="header-link" id="create-blog-link" style="display: none;">Создать Блог</a>
+      <a href="/blogs/manage" class="header-link" id="manage-blogs-link" style="display: none;">Управление блогами</a>
+      
+       <a href="/feedback" class="header-link">Обратная связь</a>
     </nav>
     <div class="user-section">
       <span id="user-info"></span>
       <button id="auth-button" class="auth-button">Войти</button>
     </div>
     <div class="image-section">
-      <img src="Image/Nachalo.png" alt="Nachalo" class="main-image">
+      <img th:src="@{/Image/Nachalo.png}" alt="Nachalo" class="main-image">
     </div>
   </div>
 </div>
@@ -25,10 +27,16 @@
   <button class="search-button">Найти</button>
 </div>
 
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const userInfo = document.getElementById("user-info");
     const authButton = document.getElementById("auth-button");
+    
+    // Элементы для управления видимостью в навигации
+    const createRecipeLink = document.getElementById("create-recipe-link");
+    const createBlogLink = document.getElementById("create-blog-link");
+    const manageBlogsLink = document.getElementById("manage-blogs-link");
 
     // Запрос к серверу для проверки авторизации
     fetch("/user/auth/currentUser")
@@ -45,6 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             location.reload();  // Перезагружаем страницу после выхода
                         });
                 };
+
+                // Показываем элементы для авторизованных пользователей
+                createRecipeLink.style.display = "inline";
+                createBlogLink.style.display = "inline";
+                manageBlogsLink.style.display = "inline";
             } else {
                 // Если пользователь не авторизован
                 userInfo.textContent = "";
@@ -52,10 +65,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 authButton.onclick = function () {
                     window.location.href = "/auth/login";  // Перенаправление на страницу логина
                 };
+
+                // Скрываем элементы для авторизованных пользователей
+                createRecipeLink.style.display = "none";
+                createBlogLink.style.display = "none";
+                manageBlogsLink.style.display = "none";
             }
         })
         .catch(error => {
             console.error('Error fetching user data:', error);
         });
 });
+
 </script>

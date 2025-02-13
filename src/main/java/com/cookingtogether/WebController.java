@@ -1,6 +1,9 @@
 package com.cookingtogether;
 
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Контроллер для обработки веб-запросов.
@@ -9,11 +12,10 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebController {
 
-
-    /**
-     * Обрабатывает запрос к странице регистрации.
-     *
-     * @return имя шаблона страницы регистрации ("register").
-     */
+	@GetMapping("/feedback")
+    public String getFeedback(Model model) {
+        return "feedback";
+    }
+    
     
 }

@@ -12,6 +12,7 @@ import com.cookingtogether.Comment;
 import com.cookingtogether.Recipe;
 import com.cookingtogether.User;
 import com.cookingtogether.repository.BlogRepo;
+import com.cookingtogether.repository.CommentRepo;
 import com.cookingtogether.repository.RecipeRepo;
 import com.cookingtogether.service.BlogService;
 import com.cookingtogether.service.CommentService;
@@ -43,6 +44,9 @@ public class BlogController {
 
     @Autowired
     private CommentService commentService;
+    
+    @Autowired
+    private CommentRepo commentRepo;
     
     @Autowired
     private RecipeRepo recipeRepository;
@@ -142,6 +146,8 @@ public class BlogController {
         if (blog.isPresent()) {
             Blog blogData = blog.get();
             
+            model.addAttribute("comment", new Comment());
+            
             // Форматируем дату перед добавлением в модель
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String formattedCreatedAt = blogData.getCreatedAt().format(formatter);
@@ -159,6 +165,35 @@ public class BlogController {
         } else {
             return "redirect:/blogs";
         }
+    }
+    
+    @PostMapping("/{slug}/comment")
+    public String addComment(@PathVariable("slug") String slug, @ModelAttribute Comment comment, Model model,
+                             @AuthenticationPrincipal User user) {
+        Optional<Blog> blog = blogService.getBlogBySlug(slug);
+        if (blog.isPresent()) {
+            Blog blogData = blog.get();
+            
+            // Привязываем комментарий к рецепту и пользователю
+            comment.setRecipe(blogData.getRecipe());
+            comment.setUser(user); // Устанавливаем текущего пользователя
+            
+            // Сохраняем комментарий
+            commentService.addComment(comment);
+            
+            // Перенаправляем обратно на страницу блога
+            return "redirect:/blogs/" + slug;
+        } else {
+            return "redirect:/blogs";
+        }
+    }
+    
+    @GetMapping("/manage")
+    public String manageBlogs(Model model, @AuthenticationPrincipal User user) {
+        // Получаем блоги пользователя
+        List<Blog> blogs = blogRepo.findByUserId(user.getId());
+        model.addAttribute("blogs", blogs);
+        return "manage-blogs"; // Имя HTML-файла с блогами для управления
     }
 
 
@@ -187,12 +222,22 @@ public class BlogController {
      * @param id идентификатор блога для удаления.
      * @return статус 204 (No Content) или 404, если блог не найден.
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBlog(@PathVariable int id) {
-        if (blogRepo.existsById(id)) {
-            blogRepo.deleteById(id);
-            return ResponseEntity.noContent().build();
+    
+
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public String deleteBlog(@PathVariable("id") int id, @AuthenticationPrincipal User user) {
+        Optional<Blog> blogOpt = blogRepo.findById(id);
+        if (blogOpt.isPresent()) {
+            Blog blog = blogOpt.get();
+            if (blog.getUserId().equals(user.getId())) {
+                // Удаляем все комментарии, связанные с этим блогом
+                commentRepo.deleteByRecipeId(blog.getId());
+                // Теперь можно удалить сам блог
+                blogRepo.delete(blog);
+            }
         }
-        return ResponseEntity.notFound().build();
+        return "redirect:/blogs/manage";
     }
+
+    
 }

@@ -40,6 +40,7 @@ public class WebSecurityConfig {
         http
             .csrf().disable()
             .authorizeRequests()
+            	.requestMatchers("/create", "/blogs/create/**", "/blogs/{slug}/comment").authenticated()
                 .requestMatchers("/**").permitAll() // Права доступа
                 .anyRequest().authenticated() // Все остальные страницы требуют авторизации
             .and()

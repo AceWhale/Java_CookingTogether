@@ -18,10 +18,10 @@
       <div th:replace="~{fragments/header}"></div>
 
       <!-- Основное содержимое -->
-      <div class="main-content">
-        <div class="recipe-container">
+      <div>
+        <div th:each="recipe : ${recipes}" class="recipe-container">
           <!-- Динамическая загрузка рецептов с использованием Thymeleaf -->
-          <div th:each="recipe : ${recipes}" class="recipe-item">
+          <div  class="recipe-item">
   <h2 class="recipe-title" th:text="${recipe.title}">Рецепт</h2>
   <div class="recipe-content">
     <!-- Отображение изображения рецепта -->
@@ -36,32 +36,14 @@
     <p><strong>Шаги:</strong> <span th:text="${recipe.steps}"></span></p>
     <p><strong>Рейтинг:</strong> <span th:text="${recipe.rating}"></span></p>
   </div>
-  <div class="read-more">
-    <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="read-more-link">Читать далее →</a>
-  </div>
+</div>
+</div>
 </div>
 
+<div th:replace="~{fragments/comments}"></div>
 
-
-        </div>
-
-        <div class="side-content">
-          <h3>Дополнительная информация для вас</h3>
-          <p class="ingredients">
-            <strong>Ингредиенты:</strong><br>
-            Яйцо – 1 шт.<br>
-            Творог – 250 гр.<br>
-            Сливочное масло – 150 гр.<br>
-            Мука пшеничная – 250-300 гр.
-          </p>
-        </div>
-      </div>
-
-      <!-- Карточки с комментариями -->
-      <div th:replace="~{fragments/comments}"></div>
-
-    </div>
-  </div>
+</div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -511,6 +511,277 @@ body {
   color: #4a6572;
 }
 
+.recipe-container {
+  flex: 2;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  border-radius: 12px; /* Более округлые углы */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавная анимация */
+  margin-bottom: 30px;
+}
+
+.recipe-container:hover {
+  transform: translateY(-5px); /* Легкий подъем при наведении */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Более заметная тень при наведении */
+}
+
+.recipe-title {
+  font-size: 1.8em;
+  color: #333;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+.recipe-meta {
+  font-size: 0.9em;
+  color: #777;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.recipe-content {
+  display: flex;
+  gap: 20px;
+}
+
+.recipe-image-left {
+  width: 40%;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-description {
+  font-size: 1.1em;
+  color: #444;
+  line-height: 1.6;
+}
+
+.recipe-meta span {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+/* Стиль для списка ингредиентов */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+ul li strong {
+  color: #333;
+}
+
+/* Стиль для кнопки "Подробнее" */
+.read-more-link {
+  display: block;
+  margin-top: 20px;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.read-more-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Социальные иконки */
+.social-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.social-icon {
+  font-size: 28px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  opacity: 0.7;
+}
+
+.social-icon.youtube {
+  color: #ff0000;
+}
+
+.social-icon.facebook {
+  color: #1877f2;
+}
+
+.social-icon.instagram {
+  color: #e4405f;
+}
+
+.social-icon.twitter {
+  color: #1da1f2;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-container {
+  margin-top: 30px;
+}
+
+.blog-item {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.blog-title {
+  font-size: 1.8em;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.text-muted {
+  color: #777777;
+}
+
+.blog-description {
+  font-size: 1.1em;
+  color: #555555;
+  margin-bottom: 15px;
+}
+
+.recipe-title {
+  font-size: 1.5em;
+  color: #333333;
+  margin-top: 20px;
+}
+
+.recipe-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.recipe-content li {
+  color: #555555;
+}
+
+.recipe-content p {
+  font-size: 1.1em;
+  color: #555555;
+}
+
+.read-more-link {
+  display: inline-block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #3016c2;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.read-more-link:hover {
+  color: #1a0d99;
+  text-decoration: underline;
+}
+
+.text-muted {
+  font-size: 0.9em;
+}
+
+h1 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 30px;
+}
+
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-top: 30px;
+}
+
+h1 {
+  color: #333333;
+}
+
+.recipe-image img {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mb-3 {
+  margin-bottom: 20px;
+}
+
+.comment-form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-form textarea {
+  max-width: 100%;
+  height: 120px;
+}
+
+.comment-form button {
+  font-weight: bold;
+}
+
+.list-unstyled {
+  padding-left: 0;
+}
+
+.comment-item {
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-item p {
+  color: #555555;
+}
+
+.comment-item strong {
+  color: #3016c2;
+}
+
+h4 {
+  color: #333333;
+}
+
+
 
 /*
 #result {

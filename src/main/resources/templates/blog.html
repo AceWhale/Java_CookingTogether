@@ -13,24 +13,23 @@
 
 <body>
   <div class="container blog-container">
-	<div th:replace="~{fragments/header}"></div>
+    <div th:replace="~{fragments/header}"></div>
     <h1 class="text-center mb-4">Блоги</h1>
     <div th:each="blog : ${blogs}" class="blog-item">
       <h2 class="blog-title" th:text="${blog.title}">Название блога</h2>
-      <p>Дата создания: <span th:text="${blog.createdAt != null ? #temporals.format(blog.createdAt, 'dd.MM.yyyy') : 'Нет данных'}"></span></p>
-      <p th:text="${blog.description}">Описание блога</p>
-	  <h4>Рецепт:</h4>
-	  <div th:if="${blog.recipe}">
-	      <ul>
-	          <li th:each="ingredient : ${blog.recipe.ingredients}" th:text="${ingredient}">Ингредиент</li>
-	      </ul>
-	      <p><strong>Шаги:</strong> <span th:text="${blog.recipe.steps}"></span></p>
-	      <p><strong>Рейтинг:</strong> <span th:text="${blog.recipe.rating}"></span></p>
-	  </div>
-	  <p th:if="${blog.recipe == null}">Рецепт отсутствует</p>
+      <p class="text-muted mb-2">Дата создания: <span th:text="${blog.createdAt != null ? #temporals.format(blog.createdAt, 'dd.MM.yyyy') : 'Нет данных'}"></span></p>
+      <p class="blog-description" th:text="${blog.description}">Описание блога</p>
+      <h4 class="recipe-title">Рецепт:</h4>
+      <div th:if="${blog.recipe}" class="recipe-content">
+        <ul>
+          <li th:each="ingredient : ${blog.recipe.ingredients}" th:text="${ingredient}">Ингредиент</li>
+        </ul>
+        <p><strong>Шаги:</strong> <span th:text="${blog.recipe.steps}"></span></p>
+        <p><strong>Рейтинг:</strong> <span th:text="${blog.recipe.rating}"></span></p>
+      </div>
+      <p th:if="${blog.recipe == null}" class="text-muted">Рецепт отсутствует</p>
 
-	  <a th:href="@{/blogs/{slug}(slug=${blog.slug})}" class="read-more-link">Читать далее →</a>
-
+      <a th:href="@{/blogs/{slug}(slug=${blog.slug})}" class="read-more-link">Читать далее →</a>
     </div>
   </div>
 </body>

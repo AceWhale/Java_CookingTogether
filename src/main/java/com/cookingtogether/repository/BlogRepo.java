@@ -37,10 +37,10 @@ public interface BlogRepo extends JpaRepository<Blog, Integer> {
     /**
      * Метод для поиска всех блогов пользователя по его идентификатору.
      *
-     * @param userId идентификатор пользователя.
+     * @param long1 идентификатор пользователя.
      * @return список блогов, принадлежащих указанному пользователю.
      */
-    List<Blog> findByUserId(int userId);
+    List<Blog> findByUserId(Long long1);
 
     /**
      * Метод для поиска блога по его названию.
